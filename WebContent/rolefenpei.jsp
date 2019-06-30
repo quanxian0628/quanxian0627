@@ -40,7 +40,7 @@
 		<!--上面是中间的结束-->
 		<!--下面是右边的开始-->
 		<div class="role_right">
-			<button class="btn btn-info btn-lg">更 新</button>
+			<button class="btn btn-info btn-lg btnURSave">更 新</button>
 		</div>
 		<!--上面是右边的结束-->
 		<div class="clear"></div>

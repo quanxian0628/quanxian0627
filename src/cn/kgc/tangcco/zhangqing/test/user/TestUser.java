@@ -19,8 +19,5 @@ public class TestUser {
 	}
 	@Test
 	public void testUserDao() throws Exception {
-		for(User u :this.services.selectUser()) {
-			System.out.println(u);
-		}
 	}
 }

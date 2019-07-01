@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var global_uId=0;//全局uId
-	var global_arr_rId=new Array(); 
+	var global_arr_rId=new Array();//全局的id
 	
 	loadUser();
 	loadRole();
@@ -26,30 +26,40 @@ $(document).ready(function() {
 	
 	//姓名行点击方法
 	function trClick($this){
+		global_arr_rId=new Array();//清空数组1
+		global_arr_rId2=new Array();//清空数组2
+		
+		
+		
 		$(".selectUser tr:gt(0)").css("background-color","white");
 		$this.css("background-color","#F2DEDE");
 		//
 		global_uId=$this.find(".uId").val();
 		clearCheckboxStyle();
 		$.post("SelectRIdByUIdServlet","uId="+global_uId,function(json){
+			var matchId=0;
 			for(var i=0;i<json.length;i++){
-				matchRoleId(json[i]);
+				//matchRoleId(json[i]);
+				var roleLi=$(".manageList li");
+				
+				$(roleLi).each(function(){
+					var rId=$(this).find(".rId").val();
+					if(json[i]==rId){
+						global_arr_rId[matchId]=rId;
+						$(this).find("input[type='checkbox']+i").css("background-color","#2489c5");
+						matchId++;
+					}
+				});
 			}
+			
+			alert("数组1："+global_arr_rId.toString()+"==="+"数组2："+global_arr_rId2.toString());
+			
 		},"json")
 	}
 	
 	//根据uId匹配rId
 	function matchRoleId(urId){
-		var roleLi=$(".manageList li");
-		var i=0;
-		$(roleLi).each(function(){
-			var rId=$(this).find(".rId").val();
-			if(urId==rId){
-				global_arr_rId[i]=rId;
-				$(this).find("input[type='checkbox']+i").css("background-color","#2489c5");
-			}
-			i++;
-		});
+		
 	}
 	
 	//清除角色复选框的样式
@@ -88,6 +98,7 @@ $(document).ready(function() {
 	
 	//全选/全不选
 	$(".quanXuan input[type='checkbox']").click(function(){
+		global_arr_rId2=new Array();//清空数组2
 		if($(this).is(':checked')) {
 			$(this).parents("li").find(".manageList").find("input[type='checkbox']+i").css("background-color","#2489c5");
 		}else{
@@ -97,6 +108,7 @@ $(document).ready(function() {
 	
 	//实现角色反选
 	function roleIsChecked($this){
+		global_arr_rId2=new Array();//清空数组2
 		//判断当前选中角色的背景颜色
 		var bgColor=$this.next().css("background-color");
 		//alert(bgColor);
@@ -119,20 +131,24 @@ $(document).ready(function() {
 	
 	//更新按钮点击事件
 	$(".btnURSave").click(function(){
+		global_arr_rId2=new Array();//清空数组2
 		if(global_uId==0||global_arr_rId==""){
 			alert("请为人员分配角色！");
 			return;
 		}
-		alert(global_uId);
+		//alert(global_uId);
 		//判断uId在UR表中是否存在
 		//先删除uId
 		$.post("ExistsUIdForURServlet2","uId="+global_uId,function(data){
-			alert(data);
+			//alert(data);
 			if(data=="true"){
 				//存在
-				alert("存在");
+				//alert("存在");
+				//情况1：没有变更
+				//情况2：有变更（先删除，再添加）
+				getCurRoleId(global_arr_rId);
 			}else{
-				//不存在
+				//不存在，直接添加
 				alert("不存在");
 			}
 		})
@@ -144,15 +160,48 @@ $(document).ready(function() {
 		
 	});
 	
+	//判断是否有变更
+	var global_arr_rId2=new Array();
+	var ckCount=0;
+	function getCurRoleId(global_arr_rId){
+		ckCount=0;
+		var roleLi=$(".manageList li");
+		
+		$(roleLi).each(function(){
+			var bgColor=$(this).find("input[type='checkbox']+i").css("background-color");
+			if(bgColor=="rgb(36, 137, 197)"){
+				var cur_rId=$(this).find(".rId").val();
+				global_arr_rId2[ckCount]=cur_rId;
+				alert(ckCount+"次数");
+				ckCount++;
+			}
+		});
+		
+		alert("数组一："+global_arr_rId.sort().toString()+"====数组二："+global_arr_rId2.sort().toString());
+		
+		if(ckCount!=global_arr_rId.length){
+			//有变更（先删除，再添加）
+			alert("有变更（先删除，再添加）");
+		}else{
+			
+			if(global_arr_rId.sort().toString()==global_arr_rId2.sort().toString()){
+				alert("人员角色无变更！");
+			}else{
+				//有变更（先删除，再添加）
+			}
+		}
+		
+	}
+	
+	//在ur表中先删除rId
 	function del_uIdForUR(){
-		//先删除uId
 		$("DeluIdServlet","uId="+global_uId,function(data){
 			
 		})
 	}
 	
+	//在ur表中再添加rId
 	function add_uIdForUR(){
-		//先删除uId
 		$("DeluIdServlet","uId="+global_uId,function(data){
 			
 		})

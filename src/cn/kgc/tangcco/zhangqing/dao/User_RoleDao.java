@@ -19,4 +19,20 @@ public interface User_RoleDao {
 	 * @return 0代表不存在
 	 */
 	int isUidByUR(int uId);
+
+	/**
+	 * 删除uId在ur表
+	 * 
+	 * @param uId
+	 * @return
+	 */
+	int delUidByUR(int uId);
+
+	/**
+	 * 向ur表中添加数据
+	 * 
+	 * @param uId
+	 * @return
+	 */
+	int addUR(int uId, List<Integer> rIdList);
 }

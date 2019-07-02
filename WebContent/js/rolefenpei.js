@@ -28,8 +28,7 @@ $(document).ready(function() {
 	function trClick($this){
 		global_arr_rId=new Array();//清空数组1
 		global_arr_rId2=new Array();//清空数组2
-		
-		
+		checkedCount=0;//每换一个人，checkedCount清0。
 		
 		$(".selectUser tr:gt(0)").css("background-color","white");
 		$this.css("background-color","#F2DEDE");
@@ -52,7 +51,7 @@ $(document).ready(function() {
 				});
 			}
 			
-			alert("数组1："+global_arr_rId.toString()+"==="+"数组2："+global_arr_rId2.toString());
+			//alert("数组1："+global_arr_rId.toString()+"==="+"数组2："+global_arr_rId2.toString());
 			
 		},"json")
 	}
@@ -106,6 +105,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	var checkedCount=0;
 	//实现角色反选
 	function roleIsChecked($this){
 		global_arr_rId2=new Array();//清空数组2
@@ -118,21 +118,28 @@ $(document).ready(function() {
 		}else if(bgColor=="rgb(255, 255, 255)"){//如果是白色，则变成蓝色
 			$this.css("background-color","#2489c5");
 			$this.next().css("background-color","#2489c5");
+			//alert("隐藏的id："+$this.parent().next().val());
+			global_arr_rId[checkedCount]=$this.parent().next().val();
 		}else{
 			if($this.is(':checked')) {//如果点击状态，则变成蓝色的
 				$this.css("background-color","#2489c5");
 				$this.next().css("background-color","#2489c5");
+				//alert("隐藏的id222："+$this.parent().next().val());
+				global_arr_rId[checkedCount]=$this.parent().next().val();
 			}else{
 				$this.css("background-color","white");//否则白色的
 				$this.next().css("background-color","white");
 			}
 		}
+		checkedCount++;
+		alert("checkedCount==="+checkedCount);
 	}
 	
 	//更新按钮点击事件
 	$(".btnURSave").click(function(){
 		global_arr_rId2=new Array();//清空数组2
 		if(global_uId==0||global_arr_rId==""){
+			alert(global_uId+"---长度："+global_arr_rId.length);
 			alert("请为人员分配角色！");
 			return;
 		}
@@ -149,7 +156,9 @@ $(document).ready(function() {
 				getCurRoleId(global_arr_rId);
 			}else{
 				//不存在，直接添加
-				alert("不存在");
+				//alert("不存在，直接添加");
+				global_arr_rId2=global_arr_rId;//把数组1给数组2
+				add_uIdForUR();
 			}
 		})
 		
@@ -172,22 +181,25 @@ $(document).ready(function() {
 			if(bgColor=="rgb(36, 137, 197)"){
 				var cur_rId=$(this).find(".rId").val();
 				global_arr_rId2[ckCount]=cur_rId;
-				alert(ckCount+"次数");
+				//alert(ckCount+"次数");
 				ckCount++;
 			}
 		});
 		
-		alert("数组一："+global_arr_rId.sort().toString()+"====数组二："+global_arr_rId2.sort().toString());
+		//alert("数组一："+global_arr_rId.sort().toString()+"====数组二："+global_arr_rId2.sort().toString());
 		
 		if(ckCount!=global_arr_rId.length){
 			//有变更（先删除，再添加）
-			alert("有变更（先删除，再添加）");
+			//alert("有变更（先删除，再添加）");
+			del_uIdForUR();
 		}else{
 			
 			if(global_arr_rId.sort().toString()==global_arr_rId2.sort().toString()){
 				alert("人员角色无变更！");
 			}else{
 				//有变更（先删除，再添加）
+				//alert("有变更（先删除，再添加）2222222222222222");
+				del_uIdForUR();
 			}
 		}
 		
@@ -195,15 +207,32 @@ $(document).ready(function() {
 	
 	//在ur表中先删除rId
 	function del_uIdForUR(){
-		$("DeluIdServlet","uId="+global_uId,function(data){
-			
+		$.post("DeluIdServlet","uId="+global_uId,function(data){
+			if(data=="true"){
+				//alert("删除成功！");
+				//数组长度不为2，才添加
+				if(global_arr_rId2.length!=0){
+					add_uIdForUR();
+				}else{
+					alert("更新成功，此人已无任何权限！");
+				}
+			}else{
+				//alert("删除失败！");
+				alert("更新失败！");
+			}
 		})
 	}
 	
 	//在ur表中再添加rId
 	function add_uIdForUR(){
-		$("DeluIdServlet","uId="+global_uId,function(data){
-			
+		$.post("AddURServlet","uId="+global_uId+"&arr2="+global_arr_rId2,function(data){
+			if(data=="true"){
+				alert("更新成功！");
+				//alert("添加成功！");
+			}else{
+				//alert("添加失败！");
+				alert("更新失败！");
+			}
 		})
 	}
 	

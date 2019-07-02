@@ -19,4 +19,20 @@ public interface User_RoleService {
 	 * @return
 	 */
 	boolean isUidByUR(int uId);
+	
+	/**
+	 * 删除uId在ur表
+	 * 
+	 * @param uId
+	 * @return
+	 */
+	boolean delUidByUR(int uId);
+
+	/**
+	 * 向ur表中添加数据
+	 * 
+	 * @param uId
+	 * @return
+	 */
+	boolean addUR(int uId, List<Integer> rIdList);
 }

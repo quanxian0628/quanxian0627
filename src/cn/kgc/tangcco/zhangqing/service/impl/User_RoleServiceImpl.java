@@ -23,4 +23,20 @@ public class User_RoleServiceImpl implements User_RoleService {
 		return false;// 不存在
 	}
 
+	@Override
+	public boolean delUidByUR(int uId) {
+		if (urd.delUidByUR(uId) > 0) {
+			return true;//删除成功
+		}
+		return false;//删除失败
+	}
+
+	@Override
+	public boolean addUR(int uId, List<Integer> rIdList) {
+		if (urd.addUR(uId, rIdList) > 0) {
+			return true;//添加成功
+		}
+		return false;//添加失败
+	}
+
 }

@@ -37,4 +37,29 @@ public class User_RoleDaoImpl implements User_RoleDao {
 		return 0;// 不存在
 	}
 
+	@Override
+	public int delUidByUR(int uId) {
+		String sql = "delete from user_role where uid=?";
+		try {
+			return qr.update(sql, uId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int addUR(int uId, List<Integer> rIdList) {
+		for (int i = 0; i < rIdList.size(); i++) {
+			String sql="insert user_role(uid,rid) values(?,?);";
+			try {
+				qr.update(sql,uId,rIdList.get(i));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;//只要出了bug，就返回0
+			}
+		}
+		return 1;//否则就是没bug，返回1
+	}
+
 }

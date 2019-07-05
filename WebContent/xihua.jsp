@@ -5,18 +5,17 @@
 
 <head>
 <meta charset="utf-8" />
- <link rel="shortcut icon" href="img/lock_24px.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="img/lock_24px.ico" type="image/x-icon" />
 <title>人员角色分配</title>
-<link rel="stylesheet" type="text/css" href="css/rolefenpei.css" />
-<link rel="stylesheet" type="text/css" href="css/checkbox.css" />
+<link rel="stylesheet" type="text/css" href="css/xihua.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <script src="js/jquery-3.4.1.js" type="text/javascript"></script>
-<script src="js/rolefenpei.js" type="text/javascript"></script>
+<script src="js/xihua.js" type="text/javascript"></script>
 </head>
 
 <body>
 	<h1>
-		人员角色分配 ☞ <a href="xihua.jsp">跳转至“人员权限细化”页面</a>
+		人员权限细化 ☞ <a href="rolefenpei.jsp">跳转至“人员角色分配”页面</a>
 	</h1>
 
 	<div class="role_main">
@@ -25,7 +24,7 @@
 			<table class="table table-bordered table-hover selectUser">
 				<tr align="center" class="trOne">
 					<td>序号</td>
-					<td>姓名</td>
+					<td>角色</td>
 				</tr>
 			</table>
 		</div>
@@ -33,16 +32,17 @@
 		<!--下面是中间的开始-->
 		<div class="role_center">
 			<ul>
-				<li class="quanXuan"><label><input type="checkbox" /><i>✓</i>全选</label>
+				<li class="quanXuan"><input type="checkbox" id="checkbox_all"/> <label for="checkbox_all">全选</label>
 					<a href="javascript:void(0)" class="qieHuan">折叠</a>
 					<ul class="manageList">
-					</ul></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 		<!--上面是中间的结束-->
 		<!--下面是右边的开始-->
 		<div class="role_right">
-			<button class="btn btn-info btn-lg btnURSave">更 新</button>
+			<button class="btn btn-info btn-lg btnRMSave">更 新</button>
 		</div>
 		<!--上面是右边的结束-->
 		<div class="clear"></div>

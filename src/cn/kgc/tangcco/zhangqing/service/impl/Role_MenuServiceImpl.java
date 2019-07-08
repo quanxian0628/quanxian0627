@@ -15,4 +15,28 @@ public class Role_MenuServiceImpl implements Role_MenuService {
 		return rmd.getMidByRid(rId);
 	}
 
+	@Override
+	public boolean delRIdByRM(int rId) {
+		if (rmd.delRIdByRM(rId) > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean addRidForRM(int rId, List<Integer> rList) {
+		if (rmd.addRidForRM(rId, rList) > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean existsRidForRM(int rId) {
+		if (rmd.existsRidForRM(rId) > 0) {
+			return true;// 存在
+		}
+		return false;// 不存在
+	}
+
 }

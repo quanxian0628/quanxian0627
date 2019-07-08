@@ -10,4 +10,28 @@ public interface Role_MenuService {
 	 * @return
 	 */
 	List<Integer> getMidByRid(int rId);
+
+	/**
+	 * 在角色权限表，删除角色id及相关
+	 * 
+	 * @param rId
+	 * @return
+	 */
+	boolean delRIdByRM(int rId);
+
+	/**
+	 * 添加角色权限
+	 * 
+	 * @param rId
+	 * @param rList
+	 * @return
+	 */
+	boolean addRidForRM(int rId, List<Integer> rList);
+	
+	/**
+	 * 判断rId在RM表中是否存在
+	 * @param rId
+	 * @return
+	 */
+	boolean existsRidForRM(int rId);
 }

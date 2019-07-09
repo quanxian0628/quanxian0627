@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import cn.kgc.tangcco.zhangqing.common.DBUtilC3P0;
 import cn.kgc.tangcco.zhangqing.dao.UserDao;

@@ -132,7 +132,7 @@ $(document).ready(function() {
 			}
 		}
 		checkedCount++;
-		alert("checkedCount==="+checkedCount);
+		//alert("checkedCount==="+checkedCount);
 	}
 	
 	//更新按钮点击事件

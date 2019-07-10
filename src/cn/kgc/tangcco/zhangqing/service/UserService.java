@@ -11,4 +11,12 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> selectUser();
+	
+	/**
+	 * 这个登录有些特殊：如果不是行政的权限，那么将无法进入到此页面。
+	 * @param uName
+	 * @param uPwd
+	 * @return
+	 */
+	boolean login(String uName,String uPwd);
 }

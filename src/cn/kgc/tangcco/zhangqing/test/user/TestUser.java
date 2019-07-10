@@ -1,11 +1,12 @@
 package cn.kgc.tangcco.zhangqing.test.user;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import cn.kgc.tangcco.zhangqing.common.PropertiesFactory;
 import cn.kgc.tangcco.zhangqing.dao.UserDao;
-import cn.kgc.tangcco.zhangqing.entity.User;
 import cn.kgc.tangcco.zhangqing.service.UserService;
 
 public class TestUser {
@@ -19,5 +20,10 @@ public class TestUser {
 	}
 	@Test
 	public void testUserDao() throws Exception {
+		List<String> sList=dao.login("刘蒙蒙", "liumengmeng");
+		
+		for (String string : sList) {
+			System.out.println(string);
+		}
 	}
 }

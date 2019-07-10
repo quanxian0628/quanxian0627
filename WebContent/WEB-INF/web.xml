@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>test0621</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>xihua.jsp</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>test0621</display-name>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- 以下代码是过滤乱码 -->
+	<filter>
+		<filter-name>DaoFilter</filter-name>
+		<filter-class>cn.kgc.tangcco.zhangqing.filter.DaoFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>DaoFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 以上代码是过滤乱码 -->
+
+	<!-- 以下代码判断的是：是否从登陆页面进入的；如果不是，则反弹回去。 -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>cn.kgc.tangcco.zhangqing.filter.LoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<!-- 以上代码判断的是：是否从登陆页面进入的；如果不是，则反弹回去。 -->
+
+
 </web-app>

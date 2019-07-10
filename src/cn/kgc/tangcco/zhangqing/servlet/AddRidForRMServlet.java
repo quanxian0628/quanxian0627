@@ -39,6 +39,7 @@ public class AddRidForRMServlet extends HttpServlet {
 		boolean bo = rms.addRidForRM(rId, arr2List);
 
 		response.getWriter().print(bo);
+		//System.out.println(111);
 	}
 
 }
